@@ -29,12 +29,7 @@ public class LoadGameQueryHandler {
                 ),
                 game.board().turn(),
                 game.board().isFinished(),
-                game.board().winner() != null ?
-                        new LoadGameQuery.Response.BoardSide(
-                                game.board().winner().player(),
-                                game.board().winner().pits(),
-                                game.board().winner().big()
-                        ) : null
+                game.board().winner() != null ? game.board().winner() : null
         );
     }
 

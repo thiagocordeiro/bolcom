@@ -9,11 +9,12 @@ export type Board = {
   top: BoardSide
   bottom: BoardSide
   turn: Turn
+  finished: boolean
   winner?: Turn
 }
 
 export type BoardSide = {
-  player: Turn
+  player: string
   pits: Array<number>
   big: number
 }

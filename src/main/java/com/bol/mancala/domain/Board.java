@@ -40,15 +40,16 @@ public class Board {
         int nextPit = pitIndex + 1;
         Drop lastDrop = distribute(nextPit, stones, playerSide, opponentSide);
 
-        tryToCloseTheGame();
-
         if (lastDrop.pit == BoardSide.LARGER_PIT_INDEX) {
+            tryToCloseTheGame();
             return;
         }
 
         if (lastDrop.side == playerSide) {
             tryToCollectOpponentStones(lastDrop);
         }
+
+        tryToCloseTheGame();
 
         turn = (turn == Player.FIRST) ? Player.SECOND : Player.FIRST;
     }
@@ -92,7 +93,6 @@ public class Board {
         }
 
         if (opponentStones == 0) {
-            // TODO test
             return;
         }
 
@@ -126,7 +126,7 @@ public class Board {
         return Math.max(top.playableStones(), bottom.playableStones()) == 0;
     }
 
-    public BoardSide winner() {
+    public Player winner() {
         if (!isFinished()) {
             return null;
         }
@@ -136,6 +136,6 @@ public class Board {
             return null;
         }
 
-        return top.amountOfStonesInLargerPit() > bottom.amountOfStonesInLargerPit() ? top : bottom;
+        return top.amountOfStonesInLargerPit() > bottom.amountOfStonesInLargerPit() ? Player.FIRST : Player.SECOND;
     }
 }

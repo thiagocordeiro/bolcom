@@ -3,8 +3,9 @@
     <h1>
       {{ board.top.player }}
       <span v-if="isFirstPlayerTurn">👈</span>
+      <span v-if="isFirstPlayerWinner">🏆</span>
     </h1>
-    <div class="row pt-4">
+    <div class="row pt-4" :class="board.finished ? `finished`: ``">
       <div class="col-2">
         <pit-view class="text-bg-primary"
                   style="height: 204px"
@@ -50,9 +51,14 @@
     </div>
     <br>
     <h1 class="text-end">
+      <span v-if="isSecondPlayerWinner">🏆</span>
       <span v-if="isSecondPlayerTurn">👉</span>
       {{ board.bottom.player }}
     </h1>
+
+    <hr class="mt-5 mb-5"/>
+
+    <button class="btn btn-primary" @click="$router.push(`/`)">Go To Start</button>
   </div>
 </template>
 
@@ -71,11 +77,20 @@ export default defineComponent({
   },
   data: () => ({}),
   computed: {
+    isTiedMatch() {
+      return this.board.finished && this.board.winner == null
+    },
+    isFirstPlayerWinner() {
+      return this.board.finished && (this.isTiedMatch || this.board.winner == "FIRST")
+    },
+    isSecondPlayerWinner() {
+      return this.board.finished && (this.isTiedMatch || this.board.winner == "SECOND")
+    },
     isFirstPlayerTurn() {
-      return this.board.turn == "FIRST";
+      return this.board.turn == "FIRST" && !this.board.finished
     },
     isSecondPlayerTurn() {
-      return this.board.turn == "SECOND";
+      return this.board.turn == "SECOND" && !this.board.finished
     },
     firstPlayerPits() {
       return [ ...this.board.top.pits ].reverse();
@@ -91,3 +106,9 @@ export default defineComponent({
   }
 })
 </script>
+
+<style>
+.finished {
+  opacity: 0.3;
+}
+</style>

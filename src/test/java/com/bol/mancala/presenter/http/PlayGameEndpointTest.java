@@ -117,7 +117,7 @@ public class PlayGameEndpointTest extends MicronautHttpTestCase {
 
     @Override
     protected HttpResponse<?> runHttpCall() {
-        HttpRequest<String> request = HttpRequest.POST("/games/mancala/game-xxx", payload);
+        HttpRequest<String> request = HttpRequest.POST("/api/games/mancala/game-xxx", payload);
 
         try {
             return client.toBlocking().exchange(request);

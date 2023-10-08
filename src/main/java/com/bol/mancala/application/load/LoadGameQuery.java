@@ -14,7 +14,7 @@ public record LoadGameQuery(String id) {
             BoardSide bottom,
             Board.Player turn,
             boolean finished,
-            BoardSide winner
+            Board.Player winner
     ) {
         @Serdeable.Serializable
         @Serdeable.Deserializable

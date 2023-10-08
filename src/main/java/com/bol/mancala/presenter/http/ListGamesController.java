@@ -11,7 +11,7 @@ import jakarta.inject.Inject;
 
 import java.util.List;
 
-@Controller("/games/mancala")
+@Controller("/api/games/mancala")
 public class ListGamesController {
     private final ListGamesQueryHandler handler;
 

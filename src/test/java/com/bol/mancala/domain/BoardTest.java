@@ -132,7 +132,7 @@ public class BoardTest {
 
         board.play(5, Board.Player.FIRST);
 
-        assertEquals(board.bottom, board.winner());
+        assertEquals(Board.Player.SECOND, board.winner());
         assertTrue(board.isFinished());
     }
 
@@ -145,7 +145,7 @@ public class BoardTest {
         board.top.finish();
         board.bottom.finish();
 
-        assertEquals(board.bottom, board.winner());
+        assertEquals(Board.Player.SECOND, board.winner());
         assertTrue(board.isFinished());
     }
 

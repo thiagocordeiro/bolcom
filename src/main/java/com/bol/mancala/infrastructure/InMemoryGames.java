@@ -30,7 +30,7 @@ public class InMemoryGames implements Games {
     }
 
     @Override
-    public List<Game> ongoing() {
+    public List<Game> all() {
         return games.values()
                 .stream()
                 .filter(game -> !game.isFinished())

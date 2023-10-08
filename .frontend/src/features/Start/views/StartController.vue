@@ -37,11 +37,17 @@ import { defineComponent } from "vue"
 import type { Game, MancalaClient } from "@/features/Mancala/Mancala";
 import client from "@/infrastructure/client";
 
+type Data = {
+  first: string
+  second: string
+  history: Array<Game>
+}
+
 export default defineComponent({
   setup: () => ({
     client: client as MancalaClient,
   }),
-  data: () => ({
+  data: (): Data => ({
     first: "",
     second: "",
     history: [],

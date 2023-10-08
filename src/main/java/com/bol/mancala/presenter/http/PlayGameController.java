@@ -11,7 +11,7 @@ import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.http.annotation.Post;
 import jakarta.inject.Inject;
 
-@Controller("/games/mancala/{gameId}")
+@Controller("/api/games/mancala/{gameId}")
 public class PlayGameController {
     private final PlayGameCommandHandler handler;
 

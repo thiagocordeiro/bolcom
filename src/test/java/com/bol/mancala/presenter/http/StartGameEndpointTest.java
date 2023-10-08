@@ -23,7 +23,7 @@ public class StartGameEndpointTest extends MicronautHttpTestCase {
     @Override
     protected HttpResponse<?> runHttpCall() {
         HttpRequest<String> request = HttpRequest.POST(
-                "/games/mancala",
+                "/api/games/mancala",
                 """
                     {
                          "firstPlayer": "Arthur Dent",

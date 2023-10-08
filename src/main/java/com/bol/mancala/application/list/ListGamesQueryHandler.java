@@ -14,7 +14,7 @@ public class ListGamesQueryHandler {
     }
 
     public List<ListGamesQuery.Response> handle() {
-        return games.ongoing()
+        return games.all()
                 .stream()
                 .map(game -> new ListGamesQuery.Response(
                         game.id(),

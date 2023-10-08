@@ -49,7 +49,7 @@ public class ListGamesEndpointTest extends MicronautHttpTestCase {
 
     @Override
     protected HttpResponse<?> runHttpCall() {
-        HttpRequest<String> request = HttpRequest.GET("/games/mancala");
+        HttpRequest<String> request = HttpRequest.GET("/api/games/mancala");
 
         try {
             return client.toBlocking().exchange(request);

@@ -44,6 +44,40 @@ public class LoadGameEndpointTest extends MicronautHttpTestCase {
     }
 
     @Test
+    void testGivenAClosedGameIdThenReturnItsCurrentBoardState() {
+        Game game = new Game("game-xxx", Board.create("Arthur", "Ford"), new Date());
+        game.board().play(5, Board.Player.FIRST);
+        game.board().top.finish();
+        game.board().bottom.finish();
+        repository.store(game);
+
+        HttpResponse<?> response = runHttpCall();
+
+        assertEquals(HttpStatus.OK, response.status());
+        assertJsonResponseBody(
+                """
+                {
+                  "id": "game-xxx",
+                  "top": {
+                    "player": "Arthur",
+                    "pits": [ 0, 0, 0, 0, 0, 0 ],
+                    "big": 31
+                  },
+                  "bottom": {
+                    "player": "Ford",
+                    "pits": [ 0, 0, 0, 0, 0, 0 ],
+                    "big": 41
+                  },
+                  "turn": "SECOND",
+                  "finished": true,
+                  "winner": "SECOND"
+                }
+                """,
+                response
+        );
+    }
+
+    @Test
     void testGivenGameIdWhenGameDoesNotExistThenReturnNotFound() {
         repository.store(new Game("game-vvv", Board.create("Arthur", "Ford"), new Date()));
 
@@ -62,7 +96,7 @@ public class LoadGameEndpointTest extends MicronautHttpTestCase {
 
     @Override
     protected HttpResponse<?> runHttpCall() {
-        HttpRequest<String> request = HttpRequest.GET("/games/mancala/game-xxx");
+        HttpRequest<String> request = HttpRequest.GET("/api/games/mancala/game-xxx");
 
         try {
             return client.toBlocking().exchange(request);

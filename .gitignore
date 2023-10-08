@@ -2,6 +2,7 @@ Thumbs.db
 .DS_Store
 .gradle
 build/
+!build/distributions/mancala-0.1.tar
 target/
 out/
 .micronaut/

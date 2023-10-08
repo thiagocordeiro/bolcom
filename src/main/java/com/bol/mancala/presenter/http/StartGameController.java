@@ -10,7 +10,7 @@ import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Post;
 import jakarta.inject.Inject;
 
-@Controller("/games/mancala")
+@Controller("/api/games/mancala")
 public class StartGameController {
     private final StartGameCommandHandler handler;
 

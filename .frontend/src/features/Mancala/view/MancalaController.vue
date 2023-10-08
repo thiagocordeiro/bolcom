@@ -9,16 +9,19 @@
 <script lang="ts">
 import { defineComponent } from "vue"
 import BoardView from "@/features/Mancala/view/BoardView.vue";
-import type { MancalaClient, Play } from "@/features/Mancala/Mancala";
+import type { Board, MancalaClient, Play } from "@/features/Mancala/Mancala";
 import client from "@/infrastructure/client";
+
+type Data = {
+  board: Board | null,
+}
 
 export default defineComponent({
   components: { BoardView },
   setup: () => ({
     client: client as MancalaClient,
   }),
-  data: () => ({
-    /** @type Board? */
+  data: (): Data => ({
     board: null,
   }),
   mounted() {
@@ -26,8 +29,8 @@ export default defineComponent({
   },
   methods: {
     async load() {
-      const id = this.$route.params.id
-      this.board = await client.load(id);
+      const id = this.$route.params.id as string
+      this.board = await client.load(id) as Board;
     },
     async play(play: Play) {
       await client.play(play)

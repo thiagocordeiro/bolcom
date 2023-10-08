@@ -11,7 +11,7 @@ import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.PathVariable;
 import jakarta.inject.Inject;
 
-@Controller("/games/mancala/{gameId}")
+@Controller("/api/games/mancala/{gameId}")
 public class LoadGameController {
     private final LoadGameQueryHandler handler;
 
