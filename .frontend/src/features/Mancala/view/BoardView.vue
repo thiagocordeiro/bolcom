@@ -1,5 +1,5 @@
 <template>
-  <div class="container pt-5">
+  <div class="container" style="min-width: 992px">
     <h1>
       {{ board.top.player }}
       <span v-if="isFirstPlayerTurn">👈</span>
@@ -59,6 +59,10 @@
     <hr class="mt-5 mb-5"/>
 
     <button class="btn btn-primary" @click="$router.push(`/`)">Go To Start</button>
+
+    <div class="pt-5">
+      <a href="https://www.linkedin.com/in/thiagocordeirooo/" target="_blank">https://www.linkedin.com/in/thiagocordeirooo</a>
+    </div>
   </div>
 </template>
 

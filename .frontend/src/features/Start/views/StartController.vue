@@ -29,6 +29,10 @@
       </ul>
     </div>
 
+    <div class="pt-5">
+      <a href="https://www.linkedin.com/in/thiagocordeirooo/" target="_blank">https://www.linkedin.com/in/thiagocordeirooo</a>
+    </div>
+
   </div>
 </template>
 

@@ -13,6 +13,10 @@ export default {
   async history(): Promise<Array<Game>> {
     const response: AxiosResponse<Array<Game>> = await http.get(`/api/games/mancala`);
 
+    if (response.status != 200) {
+      return [];
+    }
+
     return response.data
   },
   async start(firstPlayer: string, secondPlayer: string): Promise<string> {
