@@ -6,9 +6,8 @@ public class Board {
     public final BoardSide top;
     public final BoardSide bottom;
     private Player turn;
-    public BoardSide winner;
 
-    public enum Player {FIRST_PLAYER, SECOND_PLAYER}
+    public enum Player {FIRST, SECOND}
 
     private record Drop(BoardSide side, int pit) {
     }
@@ -16,10 +15,10 @@ public class Board {
     private Board(BoardSide top, BoardSide bottom) {
         this.top = top;
         this.bottom = bottom;
-        this.turn = Player.FIRST_PLAYER;
+        this.turn = Player.FIRST;
     }
 
-    static Board create(String firstPlayer, String secondPlayer) {
+    public static Board create(String firstPlayer, String secondPlayer) {
         return new Board(
                 BoardSide.setup(firstPlayer),
                 BoardSide.setup(secondPlayer)
@@ -41,6 +40,8 @@ public class Board {
         int nextPit = pitIndex + 1;
         Drop lastDrop = distribute(nextPit, stones, playerSide, opponentSide);
 
+        tryToCloseTheGame();
+
         if (lastDrop.pit == BoardSide.LARGER_PIT_INDEX) {
             return;
         }
@@ -49,9 +50,7 @@ public class Board {
             tryToCollectOpponentStones(lastDrop);
         }
 
-        tryToCloseTheGame();
-
-        turn = (turn == Player.FIRST_PLAYER) ? Player.SECOND_PLAYER : Player.FIRST_PLAYER;
+        turn = (turn == Player.FIRST) ? Player.SECOND : Player.FIRST;
     }
 
     private Drop distribute(int pitIndex, int numberOfStones, BoardSide playerSide, BoardSide opponentSide) {
@@ -85,22 +84,27 @@ public class Board {
 
     private void tryToCollectOpponentStones(Drop drop) {
         int playerStones = drop.side.amountOfStonesInPit(drop.pit);
+        int opponentPit = BoardSide.NUMBER_OF_PITS - drop.pit - 1;
+        int opponentStones = opponentSide().amountOfStonesInPit(opponentPit);
 
         if (playerStones != 1) {
+            return;
+        }
+
+        if (opponentStones == 0) {
+            // TODO test
             return;
         }
 
         int grabbedPlayerStone = playerSide().grabAllStonesFromPit(drop.pit);
         playerSide().dropStoneInLargerPit(grabbedPlayerStone);
 
-        int opponentPit = BoardSide.NUMBER_OF_PITS - drop.pit - 1;
         int grabbedOpponentStones = opponentSide().grabAllStonesFromPit(opponentPit);
         playerSide().dropStoneInLargerPit(grabbedOpponentStones);
     }
 
     private void tryToCloseTheGame() {
         int smallerAmountOfStones = Math.min(top.playableStones(), bottom.playableStones());
-        System.out.println(smallerAmountOfStones);
 
         if (smallerAmountOfStones > 0) {
             return;
@@ -108,19 +112,30 @@ public class Board {
 
         top.finish();
         bottom.finish();
-
-        winner = top.amountOfStonesInLargerPit() > bottom.amountOfStonesInLargerPit() ? top : bottom;
     }
 
     public BoardSide playerSide() {
-        return turn == Player.FIRST_PLAYER ? this.top : this.bottom;
+        return turn == Player.FIRST ? this.top : this.bottom;
     }
 
     public BoardSide opponentSide() {
-        return turn == Player.FIRST_PLAYER ? this.bottom : this.top;
+        return turn == Player.FIRST ? this.bottom : this.top;
+    }
+
+    public boolean isFinished() {
+        return Math.max(top.playableStones(), bottom.playableStones()) == 0;
     }
 
     public BoardSide winner() {
-        return winner;
+        if (!isFinished()) {
+            return null;
+        }
+
+        if (top.amountOfStonesInLargerPit() == bottom.amountOfStonesInLargerPit()) {
+            // it is a tie
+            return null;
+        }
+
+        return top.amountOfStonesInLargerPit() > bottom.amountOfStonesInLargerPit() ? top : bottom;
     }
 }

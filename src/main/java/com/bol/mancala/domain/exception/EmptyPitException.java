@@ -1,7 +1,7 @@
 package com.bol.mancala.domain.exception;
 
-public class EmptyPitException extends DomainException {
+public class EmptyPitException extends DomainException.BusinessRuleException {
     public EmptyPitException(int pitIndex) {
-        super("Pit " + (pitIndex + 1) + " is empty");
+        super("Pit " + pitIndex + " is empty");
     }
 }

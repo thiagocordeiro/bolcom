@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BoardSideTest {
     @Test
-    void givenTheNameThenSetupBoardSideWhenThen() {
+    void givenTheNameThenSetupBoardSide() {
         String name = "Arthur Dent";
 
         BoardSide side = BoardSide.setup(name);
@@ -27,7 +27,7 @@ public class BoardSideTest {
 
         Throwable exception = Assertions.assertThrows(InvalidPitException.class, () -> side.grabAllStonesFromPit(10));
 
-        assertEquals("Pit 11 does not exist", exception.getMessage());
+        assertEquals("Pit 10 does not exist", exception.getMessage());
     }
 
     @Test
@@ -46,7 +46,7 @@ public class BoardSideTest {
 
         Throwable exception = Assertions.assertThrows(EmptyPitException.class, () -> side.grabAllStonesFromPit(3));
 
-        assertEquals("Pit 4 is empty", exception.getMessage());
+        assertEquals("Pit 3 is empty", exception.getMessage());
     }
 
     @Test

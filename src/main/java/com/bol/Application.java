@@ -1,4 +1,4 @@
-package com.bol.mancala;
+package com.bol;
 
 import io.micronaut.runtime.Micronaut;
 
